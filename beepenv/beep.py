@@ -1,84 +1,42 @@
 import RPi.GPIO as GPIO
 import time
 
-# Set up GPIO
+# Set GPIO numbering mode to BCM
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.OUT)
 
-# Define the frequency of each note in Hz
-note_freqs = {
-    'C': 261.63,
-    'D': 293.66,
-    'E': 329.63,
-    'F': 349.23,
-    'G': 392.00,
-    'A': 440.00,
-    'B': 493.88
-}
+# Define GPIO pin for buzzer
+buzzer_pin = 21
 
-# Define the length of each note in seconds
-note_lengths = {
-    'whole': 1.0,
-    'half': 0.5,
-    'quarter': 0.25,
-    'eighth': 0.125,
-    'sixteenth': 0.0625
-}
+# Define frequency of notes
+G4 = 392
+E5 = 659
+C5 = 523
+D5 = 587
 
-# Define the notes of the song
-song_notes = [
-    ('E', 'quarter'),
-    ('E', 'quarter'),
-    ('F', 'quarter'),
-    ('G', 'half'),
-    ('G', 'quarter'),
-    ('F', 'quarter'),
-    ('E', 'quarter'),
-    ('D', 'half'),
-    ('C', 'quarter'),
-    ('C', 'quarter'),
-    ('D', 'quarter'),
-    ('E', 'half'),
-    ('E', 'quarter'),
-    ('D', 'quarter'),
-    ('D', 'half'),
-    ('E', 'quarter'),
-    ('E', 'quarter'),
-    ('F', 'quarter'),
-    ('G', 'half'),
-    ('G', 'quarter'),
-    ('F', 'quarter'),
-    ('E', 'quarter'),
-    ('D', 'half'),
-    ('C', 'quarter'),
-    ('C', 'quarter'),
-    ('D', 'quarter'),
-    ('E', 'half'),
-    ('D', 'quarter'),
-    ('C', 'quarter'),
-    ('C', 'half')
-]
+# Define note lengths in seconds
+quarter_note = 0.25
+half_note = 0.5
+whole_note = 1
 
-# Play the song
-for note, length in song_notes:
-    # Calculate the duration of the note in seconds
-    duration = note_lengths[length]
-    
-    # Calculate the frequency of the note in Hz
-    frequency = note_freqs[note]
-    
-    # Generate the tone for the note
-    tone = GPIO.PWM(17, frequency)
-    tone.start(50)
-    
-    # Wait for the duration of the note
+# Define the melody
+melody = [(G4, quarter_note), (E5, quarter_note), (C5, quarter_note), (D5, whole_note)]
+
+# Set up the buzzer pin
+GPIO.setup(buzzer_pin, GPIO.OUT)
+
+# Play the melody
+for note in melody:
+    frequency = note[0]
+    duration = note[1]
+    GPIO.output(buzzer_pin, GPIO.HIGH)
     time.sleep(duration)
-    
-    # Stop the tone
-    tone.stop()
-    
-    # Wait for a short pause between notes
-    time.sleep(duration / 4)
+    GPIO.output(buzzer_pin, GPIO.LOW)
+    time.sleep(0.05)  # add a small pause between notes
 
-# Clean up GPIO
+# Play the last note for longer
+GPIO.output(buzzer_pin, GPIO.HIGH)
+time.sleep(whole_note * 1.5)
+GPIO.output(buzzer_pin, GPIO.LOW)
+
+# Clean up GPIO pins
 GPIO.cleanup()
