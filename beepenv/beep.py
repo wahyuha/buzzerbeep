@@ -1,42 +1,34 @@
 import RPi.GPIO as GPIO
 import time
 
-# Set GPIO numbering mode to BCM
+# Set up GPIO
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(21, GPIO.OUT)
 
-# Define GPIO pin for buzzer
-buzzer_pin = 21
+# Define the length of each beep in seconds
+beep_length = 0.5
 
-# Define frequency of notes
-G4 = 392
-E5 = 659
-C5 = 523
-D5 = 587
+# Define the number of beeps to generate
+num_beeps = int(5 / beep_length)
 
-# Define note lengths in seconds
-quarter_note = 0.25
-half_note = 0.5
-whole_note = 1
+# Generate the beeps
+for i in range(num_beeps):
+    # Turn on the 6-volt pin to generate a beep
+    GPIO.output(17, GPIO.HIGH)
+    
+    # Wait for the length of the beep
+    time.sleep(beep_length)
+    
+    # Turn off the 6-volt pin to stop the beep
+    GPIO.output(17, GPIO.LOW)
+    
+    # Wait for a short pause between beeps
+    time.sleep(beep_length / 2)
 
-# Define the melody
-melody = [(G4, quarter_note), (E5, quarter_note), (C5, quarter_note), (D5, whole_note)]
+# Generate a longer last beep
+GPIO.output(17, GPIO.HIGH)
+time.sleep(beep_length * 2)
+GPIO.output(17, GPIO.LOW)
 
-# Set up the buzzer pin
-GPIO.setup(buzzer_pin, GPIO.OUT)
-
-# Play the melody
-for note in melody:
-    frequency = note[0]
-    duration = note[1]
-    GPIO.output(buzzer_pin, GPIO.HIGH)
-    time.sleep(duration)
-    GPIO.output(buzzer_pin, GPIO.LOW)
-    time.sleep(0.05)  # add a small pause between notes
-
-# Play the last note for longer
-GPIO.output(buzzer_pin, GPIO.HIGH)
-time.sleep(whole_note * 1.5)
-GPIO.output(buzzer_pin, GPIO.LOW)
-
-# Clean up GPIO pins
+# Clean up GPIO
 GPIO.cleanup()
