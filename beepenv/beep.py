@@ -5,13 +5,29 @@ import time
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.OUT)
 
-# Turn on the 6-volt pin to generate a beep
+# Define the length of each beep in seconds
+beep_length = 0.1
+
+# Define the number of beeps to generate
+num_beeps = int(5 / beep_length)
+
+# Generate the beeps
+for i in range(num_beeps):
+    # Turn on the 6-volt pin to generate a beep
+    GPIO.output(17, GPIO.HIGH)
+    
+    # Wait for the length of the beep
+    time.sleep(beep_length)
+    
+    # Turn off the 6-volt pin to stop the beep
+    GPIO.output(17, GPIO.LOW)
+    
+    # Wait for a short pause between beeps
+    time.sleep(beep_length / 2)
+
+# Generate a longer last beep
 GPIO.output(17, GPIO.HIGH)
-
-# Wait for half a second
-time.sleep(0.5)
-
-# Turn off the 6-volt pin to stop the beep
+time.sleep(beep_length * 2)
 GPIO.output(17, GPIO.LOW)
 
 # Clean up GPIO
