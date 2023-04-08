@@ -26,9 +26,9 @@ for i in range(num_beeps):
     time.sleep(beep_length / 2)
 
 # Generate a longer last beep
-GPIO.output(17, GPIO.HIGH)
+GPIO.output(21, GPIO.HIGH)
 time.sleep(beep_length * 2)
-GPIO.output(17, GPIO.LOW)
+GPIO.output(21, GPIO.LOW)
 
 # Clean up GPIO
 GPIO.cleanup()
