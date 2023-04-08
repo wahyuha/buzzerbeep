@@ -6,8 +6,11 @@ GPIO.setmode(GPIO.BCM)
 buzzer_pin = 21
 GPIO.setup(buzzer_pin, GPIO.OUT)
 
-# Define the beep pattern
-beep_pattern = [0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05]
+# Define the beep pattern (original duration)
+beep_pattern = [0.15, 0.15, 0.15, 0.3, 0.3, 0.3, 0.6, 0.6, 0.6, 0.6, 0.3, 0.3, 0.3, 0.15, 0.15, 0.15]
+
+# Repeat the beep pattern for 3 times (3 times longer)
+beep_pattern *= 3
 
 # Beep the buzzer pin in the defined pattern
 for duration in beep_pattern:
