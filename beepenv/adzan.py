@@ -7,6 +7,7 @@ GPIO.setup(21, GPIO.OUT)
 
 # set up the beep pattern
 beep_pattern = [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 1]
+beep_pattern *= 3
 
 # generate the beep pattern
 for duration in beep_pattern:
