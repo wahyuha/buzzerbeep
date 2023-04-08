@@ -14,13 +14,13 @@ num_beeps = int(5 / beep_length)
 # Generate the beeps
 for i in range(num_beeps):
     # Turn on the 6-volt pin to generate a beep
-    GPIO.output(17, GPIO.HIGH)
+    GPIO.output(21, GPIO.HIGH)
     
     # Wait for the length of the beep
     time.sleep(beep_length)
     
     # Turn off the 6-volt pin to stop the beep
-    GPIO.output(17, GPIO.LOW)
+    GPIO.output(21, GPIO.LOW)
     
     # Wait for a short pause between beeps
     time.sleep(beep_length / 2)
